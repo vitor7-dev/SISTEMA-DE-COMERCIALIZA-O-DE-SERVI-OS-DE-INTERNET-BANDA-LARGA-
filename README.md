@@ -74,4 +74,8 @@ O sistema conta com:
 │   └── appsettings.json
 │
 ├── .gitignore
+<<<<<<< HEAD
 └── README.md
+=======
+└── README.md
+>>>>>>> 1cbb89f (README.md)
