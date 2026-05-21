@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Solicitações - EDUNET</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<section class="plans">
+    <div class="container">
+
+        <div class="section-header">
+            <h2 class="section-title">Minhas Solicitações</h2>
+            <p class="section-description">
+                Acompanhe suas solicitações de interesse em planos.
+            </p>
+        </div>
+
+        <div id="conteudoSolicitacao" class="plan-card"></div>
+
+        <br><br>
+
+        <a href="#" onclick="irParaPagina('index.html')" class="btn-outline voltar-btn">
+            Voltar ao Site
+        </a>
+
+    </div>
+</section>
+
+<script>
+    function irParaPagina(pagina) {
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+            window.location.href = pagina;
+        }, 350);
+    }
+
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    const solicitacao = JSON.parse(localStorage.getItem("ultimaSolicitacao"));
+    const conteudo = document.getElementById("conteudoSolicitacao");
+
+    if (!usuarioLogado) {
+        conteudo.innerHTML = `
+            <h3>Você precisa estar logado</h3>
+            <p>Faça login para visualizar suas solicitações.</p>
+            <br>
+            <a href="#" onclick="irParaPagina('login.html')" class="btn-primary">
+                Fazer Login
+            </a>
+        `;
+    } else if (!solicitacao) {
+        conteudo.innerHTML = `
+            <h3>Nenhuma solicitação encontrada</h3>
+            <p>Você ainda não demonstrou interesse em nenhum plano.</p>
+            <br>
+            <a href="#" onclick="irParaPagina('planos.html')" class="btn-primary">
+                Ver Planos
+            </a>
+        `;
+    } else {
+        conteudo.innerHTML = `
+            <h3>Solicitação em análise</h3>
+            <br>
+            <p><strong>Cliente:</strong> ${usuarioLogado.nome || usuarioLogado.email}</p>
+            <p><strong>Plano solicitado:</strong> ${solicitacao.plano}</p>
+            <p><strong>Telefone:</strong> ${solicitacao.telefone}</p>
+            <p><strong>E-mail:</strong> ${solicitacao.email}</p>
+            <p><strong>Mensagem:</strong> ${solicitacao.mensagem || "Nenhuma mensagem enviada"}</p>
+            <br>
+            <p><strong>Status:</strong> Em análise</p>
+            <p>Nossa equipe entrará em contato em até 24 horas.</p>
+        `;
+    }
+</script>
+
+</body>
+</html>

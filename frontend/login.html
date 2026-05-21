@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - EDUNET</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+      overflow:hidden;
+    }
+
+    .container{
+      width:380px;
+      background:rgba(255,255,255,0.1);
+      backdrop-filter:blur(15px);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:20px;
+      padding:40px 30px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.3);
+      color:white;
+      animation:fade 0.7s ease;
+    }
+
+    @keyframes fade{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    h2{
+      text-align:center;
+      margin-bottom:30px;
+      font-size:32px;
+    }
+
+    .input-box{
+      position:relative;
+      margin-bottom:20px;
+    }
+
+    .input-box input{
+      width:100%;
+      padding:14px;
+      border:none;
+      outline:none;
+      border-radius:10px;
+      background:rgba(255,255,255,0.15);
+      color:white;
+      font-size:15px;
+      transition:0.3s;
+    }
+
+    .input-box input::placeholder{
+      color:#ddd;
+    }
+
+    .input-box input:focus{
+      background:rgba(255,255,255,0.25);
+      transform:scale(1.02);
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      background:white;
+      color:#1e3a8a;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+      margin-top:10px;
+    }
+
+    button:hover{
+      background:#dbeafe;
+      transform:translateY(-2px);
+    }
+
+    .link{
+      text-align:center;
+      margin-top:20px;
+      cursor:pointer;
+      color:#bfdbfe;
+      transition:0.3s;
+    }
+
+    .link:hover{
+      color:white;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .logo{
+      text-align:center;
+      font-size:50px;
+      margin-bottom:15px;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:#dbeafe;
+      margin-bottom:25px;
+      font-size:14px;
+    }
+
+    @media(max-width:450px){
+      .container{
+        width:90%;
+        padding:30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <form id="loginForm">
+      <div class="logo">🔐</div>
+
+      <h2>Login</h2>
+
+      <div class="subtitle">Entre na sua conta</div>
+
+      <div class="input-box">
+        <input type="email" id="loginEmail" placeholder="Digite seu e-mail" required>
+      </div>
+
+      <div class="input-box">
+        <input type="password" id="loginSenha" placeholder="Digite sua senha" required>
+      </div>
+
+      <button type="submit">Entrar</button>
+
+      <div class="link" onclick="mostrarCadastro()">
+        Não possui conta? Cadastre-se
+      </div>
+    </form>
+
+    <form id="cadastroForm" class="hidden">
+      <div class="logo">👤</div>
+
+      <h2>Cadastro</h2>
+
+      <div class="subtitle">Crie sua conta agora</div>
+
+      <div class="input-box">
+        <input type="text" id="cadNome" placeholder="Nome completo" required>
+      </div>
+
+      <div class="input-box">
+        <input type="email" id="cadEmail" placeholder="Digite seu e-mail" required>
+      </div>
+
+      <div class="input-box">
+        <input type="password" id="cadSenha" placeholder="Digite sua senha" required>
+      </div>
+
+      <div class="input-box">
+        <input type="password" id="cadConfirmarSenha" placeholder="Confirmar senha" required>
+      </div>
+
+      <button type="submit">Cadastrar</button>
+
+      <div class="link" onclick="mostrarLogin()">
+        Já possui conta? Fazer login
+      </div>
+    </form>
+
+  </div>
+
+  <script>
+    function mostrarCadastro() {
+      document.getElementById("loginForm").classList.add("hidden");
+      document.getElementById("cadastroForm").classList.remove("hidden");
+    }
+
+    function mostrarLogin() {
+      document.getElementById("cadastroForm").classList.add("hidden");
+      document.getElementById("loginForm").classList.remove("hidden");
+    }
+
+    const loginForm = document.getElementById("loginForm");
+    const cadastroForm = document.getElementById("cadastroForm");
+
+    cadastroForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const nome = document.getElementById("cadNome").value.trim();
+      const email = document.getElementById("cadEmail").value.trim();
+      const senha = document.getElementById("cadSenha").value.trim();
+      const confirmarSenha = document.getElementById("cadConfirmarSenha").value.trim();
+
+      if (senha !== confirmarSenha) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+
+      const resposta = await fetch("http://localhost:5069/api/clientes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nome: nome,
+          email: email,
+          telefone: "",
+          cpf: "",
+          senha: senha
+        })
+      });
+
+      if (resposta.ok) {
+        alert("Cadastro realizado com sucesso!");
+        cadastroForm.reset();
+        mostrarLogin();
+      } else {
+        alert("Erro ao cadastrar usuário.");
+      }
+    });
+
+    loginForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("loginEmail").value.trim();
+      const senha = document.getElementById("loginSenha").value.trim();
+
+      const resposta = await fetch("http://localhost:5069/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          senha: senha
+        })
+      });
+
+      if (resposta.ok) {
+        const dados = await resposta.json();
+
+        localStorage.setItem("usuarioLogado", JSON.stringify(dados.usuario));
+
+        alert("Login realizado com sucesso!");
+        
+        window.location.href = "index.html";
+      } else {
+        alert("Email ou senha inválidos.");
+      }
+    });
+  </script>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+</body>
+</html>

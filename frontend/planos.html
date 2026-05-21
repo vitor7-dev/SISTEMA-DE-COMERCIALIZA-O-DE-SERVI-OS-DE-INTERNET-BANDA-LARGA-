@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos - EDUNET</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<section id="planos" class="plans">
+    <div class="container">
+
+        <div class="section-header">
+            <h2 class="section-title">Escolha Seu Plano Ideal</h2>
+            <p class="section-description">
+                Todos os planos incluem fibra óptica, sem fidelidade e instalação grátis.
+            </p>
+        </div>
+
+        <div class="plans-grid">
+
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">Essencial</h3>
+                    <div class="plan-speed">200 Mbps</div>
+                    <div class="plan-price">
+                        <span class="price-value">R$ 89,90</span>
+                        <span class="price-period">/mês</span>
+                    </div>
+                </div>
+
+                <ul class="plan-features">
+                    <li>✔ Download: 200 Mbps</li>
+                    <li>✔ Upload: 200 Mbps</li>
+                    <li>✔ Wi-Fi grátis</li>
+                    <li>✔ Instalação grátis</li>
+                    <li>✔ Suporte técnico 24/7</li>
+                </ul>
+
+                <button type="button" class="btn-plan" onclick="assinarPlano('essencial')">
+                    Assinar Agora
+                </button>
+            </div>
+
+            <div class="plan-card plan-popular">
+                <div class="popular-badge">Mais Popular</div>
+
+                <div class="plan-header">
+                    <h3 class="plan-name">Premium</h3>
+                    <div class="plan-speed">500 Mbps</div>
+                    <div class="plan-price">
+                        <span class="price-value">R$ 129,90</span>
+                        <span class="price-period">/mês</span>
+                    </div>
+                </div>
+
+                <ul class="plan-features">
+                    <li>✔ Download: 500 Mbps</li>
+                    <li>✔ Upload: 500 Mbps</li>
+                    <li>✔ Wi-Fi 6 grátis</li>
+                    <li>✔ Instalação grátis</li>
+                    <li>✔ Suporte prioritário</li>
+                    <li>✔ TV básica</li>
+                </ul>
+
+                <button type="button" class="btn-plan btn-plan-popular" onclick="assinarPlano('premium')">
+                    Assinar Agora
+                </button>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">Ultra</h3>
+                    <div class="plan-speed">1 Gbps</div>
+                    <div class="plan-price">
+                        <span class="price-value">R$ 199,90</span>
+                        <span class="price-period">/mês</span>
+                    </div>
+                </div>
+
+                <ul class="plan-features">
+                    <li>✔ Download: 1 Gbps</li>
+                    <li>✔ Upload: 1 Gbps</li>
+                    <li>✔ Wi-Fi 6E grátis</li>
+                    <li>✔ Instalação grátis</li>
+                    <li>✔ Suporte VIP</li>
+                    <li>✔ IP fixo grátis</li>
+                </ul>
+
+                <button type="button" class="btn-plan" onclick="assinarPlano('ultra')">
+                    Assinar Agora
+                </button>
+            </div>
+
+        </div>
+
+        <div class="plans-disclaimer">
+            <p>* Valores promocionais para novos clientes.</p>
+        </div>
+
+        <br><br>
+
+        <a href="#" onclick="irParaPagina('index.html')" class="btn-outline voltar-btn">
+            Voltar ao Site
+        </a>
+
+    </div>
+</section>
+
+<script>
+    function irParaPagina(pagina) {
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+            window.location.href = pagina;
+        }, 350);
+    }
+
+    function assinarPlano(plano) {
+        localStorage.setItem("planoEscolhido", plano);
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+            window.location.href = "index.html#contato";
+        }, 350);
+    }
+</script>
+
+</body>
+</html>
